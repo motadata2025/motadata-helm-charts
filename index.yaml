@@ -1,5 +1,16 @@
 apiVersion: v1
 entries:
+  motadata-apm-agent:
+    - apiVersion: v2
+      appVersion: "1.0"
+      created: "2026-01-23T02:48:25.363429295+05:30"
+      description: Motadata APM Agent
+      digest: 313ff95233e3d56f9748a504c3e91ac7e7b731fa27d7179210d2e461e8b36a26
+      name: motadata-apm-agent
+      type: application
+      urls:
+        - motadata-apm-agent-0.1.0.tgz
+      version: 0.1.0
   motadata-cr-instrumentation:
     - apiVersion: v2
       appVersion: 1.16.0
