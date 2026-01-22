@@ -15,7 +15,7 @@ entries:
     - apiVersion: v2
       appVersion: 1.16.0
       created: "2026-01-23T02:08:19.939983915+05:30"
-      description: A Helm chart for Kubernetes
+      description: Motadata Instrumentation CR
       digest: f59c1994f6bda31f766524dfcda47608828c77d0bb14a8af2517b28f7e7630bc
       name: motadata-cr-instrumentation
       type: application
