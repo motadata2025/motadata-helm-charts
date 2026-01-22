@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespace }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: motadata-apm-agent
+  namespace: {{ .Values.namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: motadata-apm-agent-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "namespaces","pods/exec"]
+    verbs: ["get", "list", "watch","create"]
+
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "statefulsets", "daemonsets"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: motadata-apm-agent-binding
+subjects:
+  - kind: ServiceAccount
+    name: motadata-apm-agent
+    namespace: {{ .Values.namespace }}
+roleRef:
+  kind: ClusterRole
+  name: motadata-apm-agent-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: motadata-apm-agent
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: motadata-apm-agent
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: motadata-apm-agent
+  template:
+    metadata:
+      labels:
+        app: motadata-apm-agent
+    spec:
+      serviceAccountName: motadata-apm-agent
+      containers:
+        - name: motadata-apm-agent
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: MOTADATA_SERVER_URL
+              value: "{{ .Values.env.motadataServerUrl }}"
+            - name: POST_INTERVAL_SECONDS
+              value: "{{ .Values.env.postIntervalSeconds }}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: motadata-apm-agent
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: motadata-apm-agent
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      nodePort: {{ .Values.service.nodePort }}

@@ -1,0 +1,17 @@
+namespace: platform
+
+image:
+  repository: ashish159357/motadata-apm-agent
+  tag: latest
+  pullPolicy: Always
+
+replicaCount: 1
+
+service:
+  type: NodePort
+  port: 8181
+  nodePort: 30083
+
+env:
+  motadataServerUrl: "https://192.168.0.20:9477/api/v2/rum"
+  postIntervalSeconds: "3"
