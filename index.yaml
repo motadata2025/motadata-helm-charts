@@ -1,14 +1,14 @@
 apiVersion: v1
 entries:
-  motadata-agent:
+  motadata-cr-instrumentation:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-01-23T01:53:48.545963124+05:30"
+    created: "2026-01-23T02:08:19.939983915+05:30"
     description: A Helm chart for Kubernetes
-    digest: 427e1f37823a58d5cbe8ae25e8950d514a853fd6a2026725ab4ba6bafb8fcfa2
-    name: motadata-agent
+    digest: f59c1994f6bda31f766524dfcda47608828c77d0bb14a8af2517b28f7e7630bc
+    name: motadata-cr-instrumentation
     type: application
     urls:
-    - motadata-agent-0.1.0.tgz
+    - motadata-cr-instrumentation-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-23T01:53:48.545402925+05:30"
+generated: "2026-01-23T02:08:19.939721137+05:30"
