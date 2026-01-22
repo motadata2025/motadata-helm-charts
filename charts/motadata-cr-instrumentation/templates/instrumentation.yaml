@@ -1,0 +1,50 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: {{ .Values.instrumentation.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  exporter:
+    endpoint: {{ .Values.exporter.endpoint | quote }}
+
+  env:
+    - name: OTEL_EXPORTER_OTLP_PROTOCOL
+      value: "http/protobuf"
+    - name: OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT
+      value: "60"
+    - name: OTEL_SPAN_EVENT_COUNT_LIMIT
+      value: "60"
+    - name: OTEL_SPAN_LINK_COUNT_LIMIT
+      value: "60"
+    - name: OTEL_LOGS_EXPORTER
+      value: "none"
+    - name: OTEL_METRICS_EXPORTER
+      value: "none"
+    - name: OTEL_TRACES_EXPORTER
+      value: "otlp"
+    - name: OTEL_METRIC_EXPORT_INTERVAL
+      value: "30000"
+
+  java:
+    image: {{ .Values.java.image | quote }}
+    env:
+      - name: OTEL_METRICS_EXPORTER
+        value: "otlp"
+
+  dotnet:
+    image: {{ .Values.dotnet.image | quote }}
+
+  nodejs:
+    image: {{ .Values.nodejs.image | quote }}
+
+  python:
+    image: {{ .Values.python.image | quote }}
+
+  propagators:
+    - tracecontext
+    - baggage
+    - b3
+
+  sampler:
+    type: parentbased_traceidratio
+    argument: "1.0"

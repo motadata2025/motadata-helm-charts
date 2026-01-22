@@ -1,0 +1,19 @@
+namespace: motadata-cr
+
+instrumentation:
+  name: central-auto
+
+exporter:
+  endpoint: http://192.168.0.20:4318
+
+java:
+  image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-java:2.19.0
+
+dotnet:
+  image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet:1.11.0
+
+nodejs:
+  image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs:0.62.0
+
+python:
+  image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.59b0
