@@ -68,6 +68,8 @@ spec:
               value: "{{ .Values.env.motadataServerUrl }}"
             - name: POST_INTERVAL_SECONDS
               value: "{{ .Values.env.postIntervalSeconds }}"
+            - name: CLUSTER_NAME
+              value: "{{ .Values.env.clusterName }}"
 ---
 apiVersion: v1
 kind: Service
