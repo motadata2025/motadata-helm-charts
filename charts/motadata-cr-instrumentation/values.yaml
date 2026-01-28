@@ -1,6 +1,7 @@
 namespace: motadata-cr
 
-resourceAttributes: "dummy.name=dummy.value"
+serviceName: "dummy.name=dummy.value"
+collectorIp: "collectorIp=dummy.value"
 
 instrumentation:
   name: central-auto
