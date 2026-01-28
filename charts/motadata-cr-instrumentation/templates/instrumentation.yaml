@@ -24,6 +24,8 @@ spec:
       value: "otlp"
     - name: OTEL_METRIC_EXPORT_INTERVAL
       value: "30000"
+    - name: OTEL_RESOURCE_ATTRIBUTES
+      value: {{ .Values.resourceAttributes }}
 
   java:
     image: {{ .Values.java.image | quote }}
