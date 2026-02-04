@@ -1,6 +1,6 @@
 namespace: motadata-cr
 
-serviceName: "dummy.name=dummy.value"
+clusterName: "dummy.name=dummy.value"
 collectorIp: "collectorIp=dummy.value"
 
 instrumentation:
