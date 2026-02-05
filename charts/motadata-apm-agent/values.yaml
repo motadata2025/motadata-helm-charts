@@ -14,5 +14,5 @@ service:
 
 env:
   motadataServerUrl: "https://192.168.0.20:9477/api/v2/rum"
-  postIntervalSeconds: "3"
+  postIntervalSeconds: "10"
   clusterName: "default"
