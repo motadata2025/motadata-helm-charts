@@ -83,7 +83,7 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
             runAsNonRoot: true
             seccompProfile:
               type: RuntimeDefault
@@ -102,7 +102,7 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
             runAsNonRoot: true
             seccompProfile:
               type: RuntimeDefault
@@ -115,3 +115,8 @@ spec:
           secret:
             defaultMode: 420
             secretName: example-opentelemetry-operator-controller-manager-service-cert
+      securityContext:
+        fsGroup: 65532
+        runAsGroup: 65532
+        runAsNonRoot: true
+        runAsUser: 65532
