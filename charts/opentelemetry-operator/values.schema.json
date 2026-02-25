@@ -2098,6 +2098,67 @@
       "examples": [
         false
       ]
+    },
+    "openshift": {
+      "type": "object",
+      "default": {},
+      "title": "OpenShift specific configuration",
+      "description": "Enable this when deploying to OpenShift clusters to automatically configure Security Context Constraints (SCC) for the operator service account.",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false,
+          "title": "Enable OpenShift mode",
+          "description": "Set to true when deploying on OpenShift",
+          "examples": [
+            true
+          ]
+        },
+        "securityContextConstraints": {
+          "type": "object",
+          "default": {},
+          "title": "Security Context Constraints configuration",
+          "additionalProperties": false,
+          "properties": {
+            "create": {
+              "type": "boolean",
+              "default": true,
+              "title": "Create SCC ClusterRoleBinding",
+              "description": "Create a ClusterRoleBinding to grant the service account access to the specified SCC",
+              "examples": [
+                true
+              ]
+            },
+            "name": {
+              "type": "string",
+              "default": "privileged",
+              "title": "SCC name",
+              "description": "Name of the SCC to use (e.g., privileged, anyuid, restricted, nonroot). This creates a binding to system:openshift:scc:<name>",
+              "examples": [
+                "privileged",
+                "anyuid",
+                "nonroot"
+              ]
+            }
+          },
+          "examples": [
+            {
+              "create": true,
+              "name": "privileged"
+            }
+          ]
+        }
+      },
+      "examples": [
+        {
+          "enabled": true,
+          "securityContextConstraints": {
+            "create": true,
+            "name": "privileged"
+          }
+        }
+      ]
     }
   },
   "examples": [

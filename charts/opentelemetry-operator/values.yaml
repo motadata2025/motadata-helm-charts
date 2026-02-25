@@ -413,3 +413,17 @@ testFramework:
   #   requests:
   #     cpu: 10m
   #     memory: 64Mi
+
+## OpenShift specific configuration
+## Enable this when deploying to OpenShift clusters to automatically configure
+## Security Context Constraints (SCC) for the operator service account.
+openshift:
+  ## Set to true when deploying on OpenShift
+  enabled: false
+  ## Security Context Constraints configuration
+  securityContextConstraints:
+    ## Create a ClusterRoleBinding to grant the service account access to the specified SCC
+    create: true
+    ## Name of the SCC to use (e.g., privileged, anyuid, restricted, nonroot)
+    ## This creates a binding to system:openshift:scc:<name>
+    name: privileged
