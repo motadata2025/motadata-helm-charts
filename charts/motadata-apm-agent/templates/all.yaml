@@ -70,6 +70,8 @@ spec:
               value: "{{ .Values.env.postIntervalSeconds }}"
             - name: CLUSTER_NAME
               value: "{{ .Values.env.clusterName }}"
+            - name: DEPLOYMENT
+              value: "{{ .Values.env.deployment }}"
 ---
 apiVersion: v1
 kind: Service

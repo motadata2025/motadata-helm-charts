@@ -16,3 +16,4 @@ env:
   motadataServerUrl: "https://192.168.0.20:9477/api/v2/rum"
   postIntervalSeconds: "60"
   clusterName: "default"
+  deployment: "kubernetes"
