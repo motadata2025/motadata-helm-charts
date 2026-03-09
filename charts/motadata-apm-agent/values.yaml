@@ -1,7 +1,7 @@
 namespace: motadata-apm-agent-np
 
 image:
-  repository: ashish159357/motadata-apm-agent
+  repository: motadata2026/motadata-apm-agent
   tag: latest
   pullPolicy: Always
 
@@ -13,7 +13,7 @@ service:
   nodePort: 30083
 
 env:
-  motadataServerUrl: "https://192.168.0.20:9477/api/v2/rum"
+  motadataServerUrl: "https://<motadata-ip>:9477/api/v2/rum"
   postIntervalSeconds: "60"
   clusterName: "default"
   deployment: "kubernetes"
