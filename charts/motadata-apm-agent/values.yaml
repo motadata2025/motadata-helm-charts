@@ -2,7 +2,7 @@ namespace: motadata-apm-agent-np
 
 image:
   repository: motadata2026/motadata-apm-agent
-  tag: latest
+  tag: 8.2.3
   pullPolicy: Always
 
 replicaCount: 1
