@@ -20,3 +20,6 @@ nodejs:
 
 python:
   image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.59b0
+
+go:
+  image: ghcr.io/open-telemetry/opentelemetry-go-instrumentation/autoinstrumentation-go

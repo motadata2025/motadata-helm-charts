@@ -17,3 +17,7 @@ env:
   postIntervalSeconds: "60"
   clusterName: "default"
   deployment: "kubernetes"
+
+tolerations: []
+
+nodeSelector: {}

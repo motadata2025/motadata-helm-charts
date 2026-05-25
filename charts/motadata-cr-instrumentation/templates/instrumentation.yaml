@@ -42,6 +42,9 @@ spec:
   python:
     image: {{ .Values.python.image | quote }}
 
+  go:
+    image: { { .Values.go.image | quote } }
+
   propagators:
     - tracecontext
     - baggage
