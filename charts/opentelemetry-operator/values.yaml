@@ -81,7 +81,7 @@ manager:
   # The Go instrumentation support in the operator is disabled by default.
   autoInstrumentation:
     go:
-      enabled: false
+      enabled: true
 
   # If ignoreMissingCollectorCRDs is set to true, the manager will not raise errors
   # if the collector CRDs are not present.
