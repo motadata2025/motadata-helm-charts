@@ -43,7 +43,7 @@ spec:
     image: {{ .Values.python.image | quote }}
 
   go:
-    image: { { .Values.go.image | quote } }
+    image: {{ .Values.go.image | quote }}
 
   propagators:
     - tracecontext
