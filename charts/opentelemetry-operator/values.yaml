@@ -45,8 +45,8 @@ pdb:
 ##
 manager:
   image:
-    repository: ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operator
-    tag: ""
+    repository: ghcr.io/motadata2025/opentelemetry-operator
+    tag: "v0.138.0"
     imagePullPolicy: IfNotPresent
   collectorImage:
     repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-k8s
@@ -238,7 +238,7 @@ manager:
 kubeRBACProxy:
   enabled: true
   image:
-    repository: quay.io/brancz/kube-rbac-proxy
+    repository: ghcr.io/motadata2025/kube-rbac-proxy
     tag: v0.20.0
   ports:
     proxyPort: 8443
