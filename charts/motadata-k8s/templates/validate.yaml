@@ -1,0 +1,26 @@
+{{/*
+Renders nothing. Exists purely to fail the install early with a readable message
+instead of shipping a placeholder value into every instrumented pod.
+*/}}
+
+{{- if not .Values.global.otlpEndpoint }}
+{{- fail "global.otlpEndpoint is required, e.g. --set global.otlpEndpoint=http://172.16.9.243:4318" }}
+{{- end }}
+
+{{- if not .Values.global.collectorIp }}
+{{- fail "global.collectorIp is required (bare IP, no scheme/port), e.g. --set global.collectorIp=172.16.9.243" }}
+{{- end }}
+
+{{- if not .Values.global.clusterName }}
+{{- fail "global.clusterName is required, e.g. --set global.clusterName=k8s" }}
+{{- end }}
+
+{{- $agent := index .Values "motadata-apm-agent" }}
+{{- if $agent.enabled }}
+{{- if not $agent.env.motadataServerUrl }}
+{{- fail "motadata-apm-agent.env.motadataServerUrl is required, e.g. https://172.16.9.243:9477/api/v2/rum" }}
+{{- end }}
+{{- if ne $agent.env.clusterName .Values.global.clusterName }}
+{{- fail (printf "motadata-apm-agent.env.clusterName (%q) must equal global.clusterName (%q). Helm cannot template values.yaml, so this has to be set in both places." $agent.env.clusterName .Values.global.clusterName) }}
+{{- end }}
+{{- end }}

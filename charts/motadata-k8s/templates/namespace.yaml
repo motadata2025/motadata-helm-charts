@@ -1,0 +1,9 @@
+{{- if .Values.instrumentation.enabled }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.instrumentation.namespace }}
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}

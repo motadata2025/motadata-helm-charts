@@ -1,0 +1,9 @@
+dependencies:
+- name: opentelemetry-operator
+  repository: file://../opentelemetry-operator
+  version: 0.102.0
+- name: motadata-apm-agent
+  repository: file://../motadata-apm-agent
+  version: 0.1.0
+digest: sha256:8b543ab8f5a03b385a8c03520392c38367963456b5fba2b9aeb9fd5bf7a8e3b6
+generated: "2026-08-16T17:49:02.246466094+05:30"

@@ -1,0 +1,70 @@
+{{- if .Values.instrumentation.enabled }}
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: {{ .Values.instrumentation.name }}
+  namespace: {{ .Values.instrumentation.namespace }}
+  annotations:
+    # The operator's minstrumentation.kb.io / vinstrumentationcreateupdate.kb.io
+    # webhooks are failurePolicy:Fail, so this CR is rejected if it is applied
+    # before the operator pod is serving. Deferring it to a post-install hook
+    # (combined with `helm install --wait`) is what makes the single-command
+    # install work. Without --wait this WILL race.
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-weight: "0"
+    # Explicit rather than relying on Helm's implicit default, so `helm upgrade`
+    # cannot fail with "already exists" against the CR left behind by install.
+    # This is delete-then-recreate: the CR is briefly absent mid-upgrade, which
+    # is harmless because the operator only reads it at pod-creation time.
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  exporter:
+    endpoint: {{ .Values.global.otlpEndpoint | quote }}
+
+  env:
+    - name: OTEL_EXPORTER_OTLP_PROTOCOL
+      value: "http/protobuf"
+    - name: OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT
+      value: "60"
+    - name: OTEL_SPAN_EVENT_COUNT_LIMIT
+      value: "60"
+    - name: OTEL_SPAN_LINK_COUNT_LIMIT
+      value: "60"
+    - name: OTEL_LOGS_EXPORTER
+      value: "none"
+    - name: OTEL_METRICS_EXPORTER
+      value: "none"
+    - name: OTEL_TRACES_EXPORTER
+      value: "otlp"
+    - name: OTEL_METRIC_EXPORT_INTERVAL
+      value: "30000"
+    - name: OTEL_RESOURCE_ATTRIBUTES
+      value: "k8s.cluster.name={{ .Values.global.clusterName }},collectorIp={{ .Values.global.collectorIp }}"
+
+  java:
+    image: {{ .Values.instrumentation.images.java | quote }}
+    env:
+      - name: OTEL_METRICS_EXPORTER
+        value: "otlp"
+
+  dotnet:
+    image: {{ .Values.instrumentation.images.dotnet | quote }}
+
+  nodejs:
+    image: {{ .Values.instrumentation.images.nodejs | quote }}
+
+  python:
+    image: {{ .Values.instrumentation.images.python | quote }}
+
+  go:
+    image: {{ .Values.instrumentation.images.go | quote }}
+
+  propagators:
+    - tracecontext
+    - baggage
+    - b3
+
+  sampler:
+    type: {{ .Values.instrumentation.sampler.type }}
+    argument: {{ .Values.instrumentation.sampler.argument | quote }}
+{{- end }}

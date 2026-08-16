@@ -1,0 +1,77 @@
+# ============================================================
+# The values a user actually has to supply.
+# ============================================================
+global:
+  # OTLP HTTP endpoint the auto-instrumentation SDKs export traces to.
+  # e.g. http://172.16.9.243:4318
+  otlpEndpoint: ""
+
+  # Bare IP of the collector. Reported as a resource attribute only.
+  # Kept separate from otlpEndpoint because that one is a URL and this is not;
+  # deriving one from the other breaks as soon as a hostname is used.
+  # e.g. 172.16.9.243
+  collectorIp: ""
+
+  # Logical cluster name, reported as k8s.cluster.name.
+  # e.g. k8s
+  clusterName: ""
+
+# ============================================================
+# Instrumentation CR — owned by this chart, not a subchart.
+# See the note in Chart.yaml for why.
+# ============================================================
+instrumentation:
+  enabled: true
+  namespace: motadata-cr
+  name: central-auto
+
+  sampler:
+    type: parentbased_traceidratio
+    argument: "1.0"
+
+  images:
+    java: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-java:2.19.0
+    dotnet: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet:1.11.0
+    nodejs: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs:0.62.0
+    python: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.59b0
+    go: ghcr.io/open-telemetry/opentelemetry-go-instrumentation/autoinstrumentation-go
+
+# ============================================================
+# Subchart values MUST live under the subchart's key. A subchart only sees
+# .Values.global.* plus its own scope, and neither of these charts reads
+# .Values.global.* — so globals alone would not reach them.
+# ============================================================
+opentelemetry-operator:
+  enabled: true
+  fullnameOverride: motadata-operator
+
+  manager:
+    autoInstrumentation:
+      go:
+        enabled: true
+
+  admissionWebhooks:
+    # No cert-manager dependency — Helm mints the webhook cert itself.
+    # Flip certManager.enabled back to true (and install cert-manager) if you
+    # want managed renewal on a long-lived cluster.
+    certManager:
+      enabled: false
+    autoGenerateCert:
+      enabled: true
+      # Reuse the existing cert on upgrade instead of minting a new one.
+      # Implemented with Helm's `lookup`, which returns nothing when rendering
+      # offline — under `helm template`, ArgoCD or Flux this silently
+      # regenerates the cert on every sync. Use cert-manager in that setup.
+      recreate: false
+
+motadata-apm-agent:
+  enabled: true
+  env:
+    # Motadata server ingest URL. NOT the same host/port/path as
+    # global.otlpEndpoint — this is :9477/api/v2/rum, that one is :4318.
+    motadataServerUrl: ""
+    postIntervalSeconds: "60"
+    deployment: "kubernetes"
+    # Must equal global.clusterName. Enforced by templates/validate.yaml.
+    # It cannot be derived automatically: Helm does not template values.yaml.
+    clusterName: ""
