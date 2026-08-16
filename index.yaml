@@ -25,6 +25,17 @@ entries:
   motadata-k8s:
     - apiVersion: v2
       appVersion: "1.0"
+      created: "2026-08-17T01:00:50.661990974+05:30"
+      description: One-shot install of the Motadata Kubernetes APM stack — OpenTelemetry
+        operator, Instrumentation CR, and Motadata APM agent.
+      digest: dd69df45b1654e20ac286c9eda26bc461dd296e7b9f8e7cda884edf114c4c725
+      name: motadata-k8s
+      type: application
+      urls:
+        - motadata-k8s-0.1.1.tgz
+      version: 0.1.1
+    - apiVersion: v2
+      appVersion: "1.0"
       created: "2026-08-17T00:32:00.420981440+05:30"
       description: One-shot install of the Motadata Kubernetes APM stack — OpenTelemetry
         operator, Instrumentation CR, and Motadata APM agent.
