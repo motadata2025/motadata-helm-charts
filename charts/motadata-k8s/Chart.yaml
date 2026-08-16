@@ -2,7 +2,7 @@ apiVersion: v2
 name: motadata-k8s
 description: One-shot install of the Motadata Kubernetes APM stack — OpenTelemetry operator, Instrumentation CR, and Motadata APM agent.
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "1.0"
 
 # Dependencies are file:// against the sibling charts in this repo, not the
