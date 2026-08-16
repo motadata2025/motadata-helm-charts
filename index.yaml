@@ -22,6 +22,18 @@ entries:
       urls:
         - motadata-cr-instrumentation-0.1.0.tgz
       version: 0.1.0
+  motadata-k8s:
+    - apiVersion: v2
+      appVersion: "1.0"
+      created: "2026-08-17T00:32:00.420981440+05:30"
+      description: One-shot install of the Motadata Kubernetes APM stack — OpenTelemetry
+        operator, Instrumentation CR, and Motadata APM agent.
+      digest: bdcf0e711fd015d5e994cf2bb72bff772c3424e73090f208044c420468591dc2
+      name: motadata-k8s
+      type: application
+      urls:
+        - motadata-k8s-0.1.0.tgz
+      version: 0.1.0
   opentelemetry-collector:
     - apiVersion: v2
       appVersion: 0.143.0
