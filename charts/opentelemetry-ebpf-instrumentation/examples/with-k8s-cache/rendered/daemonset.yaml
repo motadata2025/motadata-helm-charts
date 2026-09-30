@@ -6,10 +6,10 @@ metadata:
   name: example-opentelemetry-ebpf-instrumentation
   namespace: default
   labels:
-    helm.sh/chart: opentelemetry-ebpf-instrumentation-0.4.3
+    helm.sh/chart: opentelemetry-ebpf-instrumentation-0.13.1
     app.kubernetes.io/name: opentelemetry-ebpf-instrumentation
     app.kubernetes.io/instance: example
-    app.kubernetes.io/version: "v0.4.1"
+    app.kubernetes.io/version: "v0.13.0"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: obi
     app.kubernetes.io/component: workload
@@ -23,23 +23,25 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 978c207a10edea4abdcdbd0d8fb0826596dd86988ff928daa1b992f7ced4ef93
+        checksum/config: 39bb6bc04209a8fdc100dc10ae64158a5f99dea33afd3534c73472455319871f
         
       labels:
-        helm.sh/chart: opentelemetry-ebpf-instrumentation-0.4.3
+        helm.sh/chart: opentelemetry-ebpf-instrumentation-0.13.1
         app.kubernetes.io/name: opentelemetry-ebpf-instrumentation
         app.kubernetes.io/instance: example
-        app.kubernetes.io/version: "v0.4.1"
+        app.kubernetes.io/version: "v0.13.0"
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: obi
         app.kubernetes.io/component: workload
     spec:
       serviceAccountName: example-opentelemetry-ebpf-instrumentation
       hostPID: true
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       initContainers:
       containers:
         - name: ebpf-instrument
-          image: ghcr.io/open-telemetry/opentelemetry-ebpf-instrumentation/ebpf-instrument:v0.4.1
+          image: ghcr.io/motadata2025/opentelemetry-ebpf-instrumentation:v0.13.0
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -60,7 +62,19 @@ spec:
           volumeMounts:
             - mountPath: /etc/ebpf-instrument/config
               name: ebpf-instrument-config
+            - mountPath: /sys/fs/cgroup
+              name: cgroup
+              readOnly: true
+            - mountPath: /sys/kernel/tracing
+              name: tracefs
       volumes:
         - name: ebpf-instrument-config
           configMap:
             name: example-opentelemetry-ebpf-instrumentation
+        - name: cgroup
+          hostPath:
+            path: /sys/fs/cgroup
+            type: Directory
+        - name: tracefs
+          hostPath:
+            path: /sys/kernel/tracing
