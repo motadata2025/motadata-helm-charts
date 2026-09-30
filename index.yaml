@@ -12020,6 +12020,26 @@ entries:
       version: 0.1.0
   opentelemetry-ebpf-instrumentation:
     - apiVersion: v2
+      appVersion: v0.13.0
+      created: '2026-09-30T18:46:16.809907162+05:30'
+      description: OpenTelemetry eBPF instrumentation Helm chart for Kubernetes
+      digest: 9247ac79811cf813d35cc4b6a9e149eeed3539ff0950282598542c3c2fefda2e
+      home: https://opentelemetry.io/
+      icon: https://opentelemetry.io/img/logos/opentelemetry-logo-nav.png
+      maintainers:
+        - name: dmitryax
+        - name: jaronoff97
+        - name: TylerHelmuth
+        - name: nimrodavni78
+      name: opentelemetry-ebpf-instrumentation
+      sources:
+        - https://github.com/coralogix/opentelemetry-helm-charts
+        - https://github.com/open-telemetry/opentelemetry-helm-charts
+      type: application
+      urls:
+        - opentelemetry-ebpf-instrumentation-0.13.1.tgz
+      version: 0.13.1
+    - apiVersion: v2
       appVersion: v0.4.1
       created: "2026-01-20T22:41:16.123351685Z"
       description: OpenTelemetry eBPF instrumentation Helm chart for Kubernetes
