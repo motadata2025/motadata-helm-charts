@@ -321,7 +321,7 @@ k8sCache:
     # -- K8s Cache image registry (defaults to ghcr.io)
     registry: "ghcr.io"
     # -- K8s Cache image repository.
-    repository: open-telemetry/opentelemetry-ebpf-instrumentation/opentelemetry-ebpf-k8s-cache
+    repository: motadata2025/opentelemetry-ebpf-k8s-cache
     # -- (string) K8s Cache image tag. When empty, the Chart's appVersion is used.
     tag: ""
     # -- K8s Cache image's SHA256 digest (either in format "sha256:XYZ" or "XYZ"). When set, will override `image.tag`.
