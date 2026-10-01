@@ -22,6 +22,26 @@ entries:
       urls:
         - motadata-cr-instrumentation-0.1.0.tgz
       version: 0.1.0
+  motadata-ebpf:
+    - apiVersion: v2
+      appVersion: '1.0'
+      created: '2026-10-01T13:51:15.830441688+05:30'
+      dependencies:
+        - condition: opentelemetry-ebpf-instrumentation.enabled
+          name: opentelemetry-ebpf-instrumentation
+          repository: file://../opentelemetry-ebpf-instrumentation
+          version: 0.13.1
+        - condition: motadata-apm-agent.enabled
+          name: motadata-apm-agent
+          repository: file://../motadata-apm-agent
+          version: 0.1.0
+      description: "One-shot install of Motadata eBPF APM — OpenTelemetry eBPF Instrumentation (OBI) and the Motadata APM agent."
+      digest: 89d1cdb83106aaef3b32e0e424938ab4766daed6c21d86f8b5a6a3ab981f82ce
+      name: motadata-ebpf
+      type: application
+      urls:
+        - motadata-ebpf-0.1.0.tgz
+      version: 0.1.0
   motadata-k8s:
     - apiVersion: v2
       appVersion: "1.0"
