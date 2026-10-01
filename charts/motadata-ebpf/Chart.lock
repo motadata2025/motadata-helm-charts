@@ -1,0 +1,9 @@
+dependencies:
+- name: opentelemetry-ebpf-instrumentation
+  repository: file://../opentelemetry-ebpf-instrumentation
+  version: 0.13.1
+- name: motadata-apm-agent
+  repository: file://../motadata-apm-agent
+  version: 0.1.0
+digest: sha256:bbe7f630b5e07830b54cb0e6006a4e31b55b33abd35a6284a931714bb2f273f7
+generated: "2026-10-01T13:46:39.444557623+05:30"

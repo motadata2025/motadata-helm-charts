@@ -1,0 +1,69 @@
+# ============================================================
+# The values a user actually has to supply.
+# ============================================================
+global:
+  # OTLP HTTP endpoint OBI exports traces and metrics to.
+  # e.g. http://172.16.15.146:4318
+  otlpEndpoint: ""
+
+  # Logical cluster name, reported as k8s.cluster.name.
+  # e.g. k8s
+  clusterName: ""
+
+# ============================================================
+# Subchart values MUST live under the subchart's key.
+# ============================================================
+opentelemetry-ebpf-instrumentation:
+  enabled: true
+
+  image:
+    registry: ghcr.io
+    repository: motadata2025/opentelemetry-ebpf-instrumentation
+    tag: v0.13.0
+
+  preset: application
+
+  env:
+    OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+
+  config:
+    # OBI passes config.data through `tpl`, so these read global.* directly.
+    data:
+      attributes:
+        kubernetes:
+          enable: true
+          cluster_name: "{{ .Values.global.clusterName }}"
+      otel_metrics_export:
+        endpoint: "{{ .Values.global.otlpEndpoint }}"
+      otel_traces_export:
+        endpoint: "{{ .Values.global.otlpEndpoint }}"
+      # Without discovery, OBI instruments every process on every node.
+      # To limit it to specific namespaces:
+      # discovery:
+      #   instrument:
+      #     - k8s_namespace: demo-apps
+      #     - k8s_namespace: product-api
+
+  # Kubernetes metadata cache. Only worth enabling on large clusters.
+  k8sCache:
+    replicas: 0
+    image:
+      registry: ghcr.io
+      repository: motadata2025/opentelemetry-ebpf-k8s-cache
+      tag: v0.13.0
+
+motadata-apm-agent:
+  enabled: true
+
+  image:
+    repository: motadata2026/motadata-apm-agent
+    tag: 8.2.4
+
+  env:
+    # Motadata server ingest URL, e.g. http://172.16.15.52:4318/kubernetes/cluster
+    motadataServerUrl: ""
+    postIntervalSeconds: "60"
+    deployment: "kubernetes"
+    # Must equal global.clusterName. Enforced by templates/validate.yaml.
+    # It cannot be derived automatically: this subchart does not use `tpl`.
+    clusterName: ""
